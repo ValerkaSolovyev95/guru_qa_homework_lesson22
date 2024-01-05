@@ -9,15 +9,15 @@ import io.restassured.specification.ResponseSpecification;
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
 
-public class BookSpec {
-    public static RequestSpecification bookRequestSpecification = with()
+public class DemoQaSpec {
+    public static RequestSpecification demoQaRequestSpecification = with()
             .filter(withCustomTemplates())
             .contentType(ContentType.JSON)
             .log().method()
             .log().body()
             .log().uri();
 
-    public static ResponseSpecification bookResponseSpecification = new ResponseSpecBuilder()
+    public static ResponseSpecification demoQaResponseSpecification = new ResponseSpecBuilder()
             .log(LogDetail.STATUS)
             .log(LogDetail.BODY)
             .build();
