@@ -13,7 +13,9 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static specs.DemoQaSpec.demoQaRequestSpecification;
-import static specs.DemoQaSpec.demoQaResponseSpecification;
+import static specs.DemoQaSpec.demoQaResponseSpecification200;
+import static specs.DemoQaSpec.demoQaResponseSpecification201;
+import static specs.DemoQaSpec.demoQaResponseSpecification204;
 
 public class BookApi {
 
@@ -25,7 +27,9 @@ public class BookApi {
                 .when()
                 .get(BOOK_STORE_V_1_BOOKS)
                 .then()
-                .spec(demoQaResponseSpecification)
+                .log().body()
+                .log().status()
+                .spec(demoQaResponseSpecification200)
                 .extract().as(BooksListModel.class);
         return booksListModel;
     }
@@ -44,7 +48,7 @@ public class BookApi {
                 .when()
                 .post(BOOK_STORE_V_1_BOOKS)
                 .then()
-                .spec(demoQaResponseSpecification);
+                .spec(demoQaResponseSpecification201);
     }
 
     public static void deleteAllBooks(LoginModel loginData) {
@@ -53,7 +57,7 @@ public class BookApi {
                 .when()
                 .delete(BOOK_STORE_V_1_BOOKS + "?UserId=" + loginData.getUserId())
                 .then()
-                .spec(demoQaResponseSpecification);
+                .spec(demoQaResponseSpecification204);
     }
 
     public static void deleteBook(LoginModel loginData, String isbn) {
@@ -66,6 +70,6 @@ public class BookApi {
                 .when()
                 .delete(BOOK_STORE_V_1_BOOK)
                 .then()
-                .spec(demoQaResponseSpecification);
+                .spec(demoQaResponseSpecification204);
     }
 }

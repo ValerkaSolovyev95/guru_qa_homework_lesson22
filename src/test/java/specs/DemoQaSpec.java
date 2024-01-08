@@ -17,8 +17,21 @@ public class DemoQaSpec {
             .log().body()
             .log().uri();
 
-    public static ResponseSpecification demoQaResponseSpecification = new ResponseSpecBuilder()
+    public static ResponseSpecification demoQaResponseSpecification200 = new ResponseSpecBuilder()
             .log(LogDetail.STATUS)
             .log(LogDetail.BODY)
+            .expectStatusCode(200)
+            .build();
+
+    public static ResponseSpecification demoQaResponseSpecification201 = new ResponseSpecBuilder()
+            .log(LogDetail.STATUS)
+            .log(LogDetail.BODY)
+            .expectStatusCode(201)
+            .build();
+
+    public static ResponseSpecification demoQaResponseSpecification204 = new ResponseSpecBuilder()
+            .log(LogDetail.STATUS)
+            .log(LogDetail.BODY)
+            .expectStatusCode(204)
             .build();
 }

@@ -12,22 +12,25 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import java.util.Map;
 
 public class BaseTest {
+    public static String env = System.getProperty("env", "local");
 
     @BeforeAll
     static void setup() {
         RestAssured.baseURI = "https://demoqa.com";
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.pageLoadStrategy = "eager";
-        Configuration.browser = System.getProperty("browser");
-        Configuration.browserSize = System.getProperty("browser_size");
-        Configuration.remote = String.format("https://user1:1234@%s/wd/hub", System.getProperty("remote_url"));
-        Configuration.browserVersion = System.getProperty("browser_version");
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
-                "enableVNC", true,
-                "enableVideo", true
-        ));
-        Configuration.browserCapabilities = capabilities;
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserSize = System.getProperty("browser_size", "1920x1080");
+        Configuration.browserVersion = System.getProperty("browser_version", "120.0");
+        if (env.equals("remote")) {
+            Configuration.remote = System.getProperty("remoteUrl", "https://user1:1234@selenoid.autotests.cloud/wd/hub");
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                    "enableVNC", true,
+                    "enableVideo", true
+            ));
+            Configuration.browserCapabilities = capabilities;
+        }
     }
 
     @BeforeEach

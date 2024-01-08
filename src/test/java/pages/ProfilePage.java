@@ -6,21 +6,27 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
-public class ProfilePage {
-    private static final SelenideElement userName = $("#userName-value");
-    private static final SelenideElement gitBookGuide = $("[id='see-book-Git Pocket Guide']");
-    public void checkUserNameProfile(String text) {
+public class ProfilePage extends BasePage{
+    private SelenideElement
+            userName = $("#userName-value"),
+            gitBookGuide = $("[id='see-book-Git Pocket Guide']");
+
+    public void openProfilePage() {
         open("/profile");
+    }
+
+    public void checkUserNameProfile(String text) {
+        openProfilePage();
         userName.shouldHave(Condition.text(text));
     }
 
     public void checkGitBookGuideVisible() {
-        open("/profile");
+        openProfilePage();
         gitBookGuide.shouldBe(Condition.visible);
     }
 
     public void checkGitBookGuideNotVisible() {
-        open("/profile");
+        openProfilePage();
         gitBookGuide.shouldNot(Condition.visible);
     }
 }
